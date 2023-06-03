@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add New Official Information</title>
+</head>
+<body>
+<h1 style="font-family: CENTURY GOTHIC; align-items: center; display: inline;  margin-right: auto;">Official Information</h1>
+<div style="font-family: CENTURY GOTHIC; font-size: 15px;">
+<form method="POST" action="/officialInformation/add">
+
+  <label for="personalNum">Personal ID:</label>
+  <input type="number" name="personalNum" id="personalNum"><br>
+
+  <label for="surname">Surname:</label>
+  <input type="text" name="surname" id="surname"><br>
+
+  <label for="name">Name:</label>
+  <input type="text" name="name" id="name"><br>
+
+  <label for="patronymic">Patronymic:</label>
+  <input type="text" name="patronymic" id="patronymic"><br>
+
+  <label for="idDep">Dep ID:</label>
+  <input type="number" name="idDep" id="idDep"><br>
+
+  <label for="education">Education:</label>
+  <input type="text" name="education" id="education"><br>
+
+  <label for="experience">Experience:</label>
+  <input type="text" name="experience" id="experience"><br>
+
+  <label for="phoneNum">Phone:</label>
+  <input type="text" name="phoneNum" id="phoneNum"><br>
+
+  <label for="salary">Salary:</label>
+  <input type="number" name="salary" id="salary"><br>
+
+  <label for="status">Status:</label>
+  <input type="text" name="status" id="status"><br>
+
+<button type="submit">Add</button>
+</form>
+</div>
+<br>
+</div>
+<form method="GET" action="/officialInformation/all">
+  <button type="submit">Back to list</button>
+</form>
+</body>
+</html>

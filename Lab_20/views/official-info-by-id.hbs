@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel='stylesheet' href='/css/style.css' />
+</head>
+<body>
+<div style="font-family: CENTURY GOTHIC; font-size: 15px;">
+<br>
+<h1>Official Information for ID {{idEmployee}}:</h1>
+<p><strong>Personal ID:</strong> {{personalNum}}</p>
+<p><strong>Surname:</strong> {{surname}}</p>
+<p><strong>Name:</strong> {{name}}</p>
+<p><strong>Patronymic address:</strong> {{patronymic}}</p>
+<p><strong>ID Dep:</strong> {{idDep}}</p>
+<p><strong>Education:</strong> {{education}}</p>
+<p><strong>Experience:</strong> {{experience}}</p>
+<p><strong>Phone:</strong> {{phoneNum}}</p>
+<p><strong>Salary:</strong> {{salary}}</p>
+<p><strong>Status:</strong> {{status}}</p>
+</div>
+<form method="GET" action="/officialInformation/all">
+  <button type="submit">Back to list</button>
+</form>
+</body>
+</html>

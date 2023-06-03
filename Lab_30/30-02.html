@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Laba_30</title>
+  </head>
+  <body>
+    <p>sum(22, 22) = <span id="rsum"></span></p>
+    <p>mul(22, 22) = <span id="rmul"></span></p>
+    <p>sub(22, 22) = <span id="rsub"></span></p>
+
+    <script>
+      (async () => {
+        const res = fetch("p.wasm");
+        const { instance } = await WebAssembly.instantiateStreaming(res);
+
+        rsum.innerHTML = instance.exports.sum(22, 22);
+        rmul.innerHTML = instance.exports.mul(22, 22);
+        rsub.innerHTML = instance.exports.sub(22, 22);
+      })();
+    </script>
+  </body>
+</html>

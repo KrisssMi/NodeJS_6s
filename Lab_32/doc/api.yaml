@@ -1,0 +1,149 @@
+openapi: 3.0.0
+
+info:
+  title: Lab32
+  description: Lab32 Api
+  version: 1.1.1
+
+servers:
+  - url: /ts
+
+tags:
+  - name: contact
+
+components:
+  schemas:
+    Contact:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        phone:
+          type: integer
+
+  responses:
+    NotFound:
+      description: Contact not found
+    BadData:
+      description: Bad data
+
+paths:
+  /get:
+    get:
+      tags:
+        - contact
+      summary: Get
+      description: Get contact
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Contact"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /post:
+    post:
+      tags:
+        - contact
+      summary: Post.
+      description: Add contact.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              title: example
+              properties:
+                name:
+                  type: string
+                  description: name
+                  example: "Kristina"
+                phone:
+                  type: integer
+                  description: phone
+                  example: "+375447270387"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: "#/components/schemas/Contact"
+        "400":
+          $ref: "#/components/responses/BadData"
+
+  /put:
+    put:
+      tags:
+        - contact
+      summary: Put
+      description: Edit contact.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              title: example
+              properties:
+                id:
+                  type: string
+                  description: id
+                name:
+                  type: string
+                  description: name
+                  example: "Kris"
+                phone:
+                  type: integer
+                  description: phone
+                  example: "+375445587635"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: "#/components/schemas/Contact"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "400":
+          $ref: "#/components/responses/BadData"
+
+  /delete:
+    delete:
+      tags:
+        - contact
+      summary: Delete
+      description: Delete contact
+      parameters:
+        - in: query
+          name: id
+          schema:
+            type: string
+          required: true
+          description: ID of the contact to delete
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Contact"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "400":
+          $ref: "#/components/responses/BadData"

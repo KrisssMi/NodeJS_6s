@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel='stylesheet' href='/css/style.css' />
+</head>
+<body>
+<div style="font-family: CENTURY GOTHIC; font-size: 15px;">
+<br>
+<h1>Personal Information for ID {{personalNum}}:</h1>
+<p><strong>Place of birth:</strong> {{placeBirth}}</p>
+<p><strong>Passport number:</strong> {{passport}}</p>
+<p><strong>Address:</strong> {{address}}</p>
+<p><strong>Registration address:</strong> {{regAddress}}</p>
+<p><strong>Marital status:</strong> {{maritalStat}}</p>
+<p><strong>Number of children:</strong> {{children}}</p>
+<p><strong>Date of birth:</strong> {{dateBirth}}</p>
+</div>
+<form method="GET" action="/personalInformation/all">
+  <button type="submit">Back to list</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+      <title>Update Information</title>
+
+<script defer="true">
+    document.addEventListener("DOMContentLoaded", ()=>{
+      const applicantForm = document.getElementById('updateForm')
+       applicantForm.addEventListener('submit', PutMethod)
+    })
+
+function PutMethod(e) {
+    e.preventDefault();
+    console.log(e);
+     let placeBirth = document.getElementById("placeBirth").value;
+     let passport = document.getElementById("passport").value;
+     let address = document.getElementById("address").value;
+     let regAddress = document.getElementById("regAddress").value;
+     let maritalStat = document.getElementById("maritalStat").value;
+     let children = document.getElementById("children").value;
+     let dateBirth = document.getElementById("dateBirth").value;
+  
+    let data = JSON.stringify({placeBirth,passport,address,regAddress,maritalStat,children,dateBirth });
+    console.log('data'+ data);
+
+    const options = {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'   
+        },
+        body: data
+    };
+  
+    try
+        {
+          const personalNum=window.location.pathname.split('/')[3];
+          const response = fetch(`http://localhost:3000/personalInformation/update/${personalNum}` , options);
+          document.location.href = 'http://localhost:3000/personalInformation/all';
+        }
+        catch(err)
+        {
+          console.log(err);
+        }
+    }
+  </script>
+</head>
+
+<body>
+<div style="font-family: CENTURY GOTHIC; font-size: 15px;">
+<br>
+<form id="updateForm">
+  <label for="placeBirth">Place of birth:</label>
+  <input type="text" id="placeBirth" name="placeBirth" value="{{info.placeBirth}}">
+  <br>
+  <label for="passport">Passport number:</label>
+  <input type="text" id="passport" name="passport" value="{{info.passport}}">
+  <br>
+  <label for="address">Address:</label>
+  <input type="text" id="address" name="address" value="{{info.address}}">
+  <br>
+  <label for="regAddress">Registration address:</label>
+  <input type="text" id="regAddress" name="regAddress" value="{{info.regAddress}}">
+  <br>
+  <label for="maritalStat">Marital status:</label>
+  <input type="text" id="maritalStat" name="maritalStat" value="{{info.maritalStat}}">
+  <br>
+  <label for="children">Number of children:</label>
+  <input type="number" id="children" name="children" value="{{info.children}}">
+  <br>
+  <label for="dateBirth">Date of birth:</label>
+  <input type="date" id="dateBirth" name="dateBirth" value="{{info.dateBirth}}">
+  <br>
+  <button type="submit">Update</button>
+</form>
+</div>
+<form method="GET" action="/personalInformation/all">
+  <button type="submit">Back to list</button>
+</form>
+</body>
+</html>

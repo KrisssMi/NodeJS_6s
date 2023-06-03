@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+      <title>Update Information</title>
+
+<script defer="true">
+    document.addEventListener("DOMContentLoaded", ()=>{
+      const applicantForm = document.getElementById('updateForm')
+       applicantForm.addEventListener('submit', PutMethod)
+    })
+
+function PutMethod(e) {
+    e.preventDefault();
+    console.log(e);
+     let personalNum = document.getElementById("personalNum").value;
+     let surname = document.getElementById("surname").value;
+     let name = document.getElementById("name").value;
+     let patronymic = document.getElementById("patronymic").value;
+     let idDep = document.getElementById("idDep").value;
+     let education = document.getElementById("education").value;
+     let experience = document.getElementById("experience").value;
+     let phoneNum = document.getElementById("phoneNum").value;
+     let salary = document.getElementById("salary").value;
+     let status = document.getElementById("status").value;
+
+    let data = JSON.stringify({personalNum, surname, name, patronymic, idDep, education, experience, phoneNum, salary, status });
+    console.log('data'+ data);
+
+    const options = {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'   
+        },
+        body: data
+    };
+  
+    try
+        {
+          const idEmployee=window.location.pathname.split('/')[3];
+          const response = fetch(`http://localhost:3000/officialInformation/update/${idEmployee}` , options);
+          document.location.href = 'http://localhost:3000/officialInformation/all';
+        }
+        catch(err)
+        {
+          console.log(err);
+        }
+    }
+  </script>
+</head>
+
+<body>
+<div style="font-family: CENTURY GOTHIC; font-size: 15px;">
+<br>
+<form id="updateForm">
+  <label for="personalNum">Personal ID:</label>
+  <input type="number" name="personalNum" id="personalNum"><br>
+
+  <label for="surname">Surname:</label>
+  <input type="text" name="surname" id="surname"><br>
+
+  <label for="name">Name:</label>
+  <input type="text" name="name" id="name"><br>
+
+  <label for="patronymic">Patronymic:</label>
+  <input type="text" name="patronymic" id="patronymic"><br>
+
+  <label for="idDep">Dep ID:</label>
+  <input type="number" name="idDep" id="idDep"><br>
+
+  <label for="education">Education:</label>
+  <input type="text" name="education" id="education"><br>
+
+  <label for="experience">Experience:</label>
+  <input type="text" name="experience" id="experience"><br>
+
+  <label for="phoneNum">Phone:</label>
+  <input type="text" name="phoneNum" id="phoneNum"><br>
+
+  <label for="salary">Salary:</label>
+  <input type="number" name="salary" id="salary"><br>
+
+  <label for="status">Status:</label>
+  <input type="text" name="status" id="status"><br>
+
+  <button type="submit">Update</button>
+</form>
+</div>
+<form method="GET" action="/officialInformation/all">
+  <button type="submit">Back to list</button>
+</form>
+</body>
+</html>

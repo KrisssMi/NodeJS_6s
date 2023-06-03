@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Teachers</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <style>
+        body {
+            background: rgb(239, 252, 194);
+            font-family: SamsungOne400;
+        }
+
+        h5
+        {
+            font-family: SamsungSharpSans;
+            color: rgba(48, 39, 15, 0.707);
+        }
+    </style>
+</head>
+<body>
+    <h5 id="error" style="color: rgb(180, 0, 0)" class="m-2"></h5>
+    <section class="container-fluid m-0">
+        <div class="row m-0">
+            <div class="col-md-3 m-0 text-left">
+                <h5 class="">Получить всех преподавателей</h5>
+                <input type="button" onclick="getTeachers()" value="GET" class="btn border-dark rounded-0 my-1">
+            </div>
+
+            <div class="col-md-3 m-0 text-left">
+                <h5 class="">Добавить преподавателя</h5>
+                <input type="text" id="postTeacher" class="my-1" placeholder="teacher"><br/>
+                <input type="text" id="postTeacherName" class="my-1" placeholder="teacher name"><br/>
+                <input type="text" id="postPulpit" class="my-1" placeholder="pulpit"><br/>
+                <input type="button" onclick="postTeachers()" value="POST" class="btn border-dark rounded-0 my-1">
+            </div>
+
+            <div class="col-md-3 m-0 text-left">
+                <h5 class="">Обновить информацию о преподавателе</h5>
+                <input type="text" id="putTeacher" class="my-1" placeholder="teacher"><br/>
+                <input type="text" id="put_teacher_name" class="my-1" placeholder="teacher name"><br/>
+                <input type="button" onclick="putTeachers()" value="PUT" class="btn border-dark rounded-0 my-1">
+            </div>
+    
+            <div class="col-md-3 m-0 text-left">
+                <h5 class="">Удалить преподавателя</h5>
+                <input type="text" id="deleteTeacher" class="my-1" placeholder="teacher"><br/>
+                <input type="button" onclick="deleteTeacher()" value="DELETE" class="btn border-dark rounded-0 my-1">
+            </div>
+        </div>
+    </section>
+<section class="m-5 p-5">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Преподаватель</th>
+            <th>ФИО преподавателя</th>
+            <th>Кафедра</th>
+        </tr>
+        </thead>
+        <tbody id="table"></tbody>
+    </table>
+</section>
+<script>
+    function getTeachers() {
+        fetch('http://localhost:3000/api/teachers', 
+        {
+            method: 'GET',
+            headers: {'Content-Type': 'application/json; charset=utf-8'}
+        })
+            .then(async response => 
+            {
+                return response.json();
+            })
+            .then(data => 
+            {
+                let body = document.getElementById("table");
+                body.innerHTML = '';
+                data.forEach(element => {
+                    body.innerHTML += 
+                    `<tr>
+                        <td>${element.teacher}</td>
+                        <td>${element.teacher_name}</td>
+                        <td>${element.pulpit}</td>
+                    </tr>`
+                   
+                });
+            })
+            .catch(err => {
+                document.getElementById('error').innerText += alert(err.statusText);
+            });
+    }
+
+    function postTeachers() {
+        document.getElementById('error').innerText = '';
+        let teacher = document.getElementById('postTeacher').value;
+        let teacherName = document.getElementById('postTeacherName').value;
+        let pulpit = document.getElementById('postPulpit').value;
+
+        if (teacher && teacherName && pulpit) {
+            fetch(`http://localhost:3000/api/teachers`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json; charset=utf-8'},
+                body: JSON.stringify({ 
+                    teacher: teacher,
+                    teacher_name: teacherName,
+                    pulpit: pulpit
+                    }
+                )
+            })
+                .then(res => res.ok ? res : Promise.reject(res))
+                .then(response => {
+                    return response.json();
+                })
+                .catch(err => {
+                    console.log(err);
+                    document.getElementById('error').innerText += err.statusText;
+                })
+                .then(() => {
+                    getTeachers();
+                });
+        } else {
+            document.getElementById('error').innerText += alert('Заполнены не все поля!');
+        }
+    }
+
+    function putTeachers() {
+        document.getElementById('error').innerText = '';
+        let teacher = document.getElementById('putTeacher').value;
+        let teacherName = document.getElementById('put_teacher_name').value;
+
+        if (teacher && teacherName) {
+            fetch(`http://localhost:3000/api/teachers`, {
+                method: 'PUT',
+                headers: {'Content-Type': 'application/json; charset=utf-8'},
+                body: JSON.stringify({
+                    teacher: teacher,
+                    teacher_name: teacherName
+                    }
+                )
+            })
+                .then(res => res.ok ? res : Promise.reject(res))
+                .then(response => 
+                {
+                    return response.json();
+                })
+                .catch(err => 
+                {
+                    console.log(err);
+                    document.getElementById('error').innerText += err.statusText;
+                })
+                .then(() => 
+                {
+                    getTeachers();
+                });
+        } else {
+            document.getElementById('error').innerText +=  alert('Заполнены не все поля!');
+        }
+    }
+
+    function deleteTeacher() {
+        document.getElementById('error').innerText = '';
+        let teacher = document.getElementById('deleteTeacher').value;
+
+        if (teacher) {
+            fetch(`http://localhost:3000/api/teachers/${teacher}`, {
+                method: 'DELETE',
+                headers: {'Content-Type': 'application/json; charset=utf-8'}
+            })
+                .then(res => res.ok ? res : Promise.reject(res))
+                .then(response => 
+                {
+                    return response.json();
+                })
+                .catch(err => 
+                {
+                    console.log(err);
+                    document.getElementById('error').innerText += err.statusText;
+                })
+                .then(() => 
+                {
+                    getTeachers();
+                });
+        } else {
+            document.getElementById('error').innerText +=  alert('Заполнены не все поля!');
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/handlebars"></script>
+    <meta charset="utf-8">
+    <title>Official Information</title>
+</head>
+
+<script defer="true">
+   async function DeleteMethod(idEmployee) {
+    const options = {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'   
+        },
+    };
+  
+    try
+        {
+          const res = await fetch('http://localhost:3000/officialInformation/delete/' + idEmployee, options);
+          document.location.href='http://localhost:3000/officialInformation/all'; 
+        }
+        catch (err)
+        {
+            console.log(err);
+        }
+    }
+  </script>
+
+<style>
+body {
+    font-size: 17px;
+}
+
+.s1 {
+   color: #a151f67b;
+   font-weight: bolder;
+   font-size: 20px;
+   letter-spacing: 1px;
+   border-bottom: 1px solid transparent;
+   border-top: 1px solid transparent;
+}
+.s1:hover {
+   border-bottom: 1px solid #6517b3;
+   border-top: 1px solid #8404d4;
+}
+
+.s6 {
+   color: #5e69e7;
+   border-bottom: 1px dashed;
+}
+.s6:hover {
+   border-bottom: 1px solid #2e3dad;
+}
+
+a {
+   display: inline-block;
+   text-decoration: none;
+   text-transform: uppercase;
+   letter-spacing: 1px;
+   margin: 15px 25px;
+   padding: 15px 20px;
+   font-size: 17px;
+   font-weight: bold;
+   font-family: CENTURY GOTHIC; align-items: center; display: inline;  margin-right: auto;
+   transition: 0.4s ease-in-out;
+}
+
+
+    button {
+        background-color: #ff3d3d81;
+        border: none;
+        border-radius: 17px;
+        color: rgb(0, 0, 0);
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        font-family: CENTURY GOTHIC; align-items: center; display: inline;  margin-right: auto;
+    }
+
+    .table {
+        width: 100%;
+        margin-bottom: 20px;
+        border-collapse: collapse;
+        text-align: center; 
+        vertical-align: middle;
+    }
+
+    .table th {
+        font-weight: bold;
+        padding: 5px;
+        background: rgba(176, 83, 253, 0.33);
+        border: 1px solid rgba(150, 53, 189, 0.68);
+    }
+    .table td {
+        border: 1px solid #dddddd;
+        padding: 2px;
+    }
+    .table tr td:first-child, .table tr th:first-child {
+        border-left: none;
+    }
+    .table tr td:last-child, .table tr th:last-child {
+        border-right: none;
+    }
+    h1 {
+        margin-left: 670px;
+    }
+</style>
+<body>
+<h1 style="font-family: CENTURY GOTHIC; align-items: center; display: inline;  margin-right: auto; margin-left: 600px;">Official Information</h1>
+<div style="font-family: CENTURY GOTHIC; font-size: 15px;">
+    <br>
+    <br>
+    <a class="s1" style="margin-left: 560px;" href="/officialInformation/add">Add New Official Information</a>
+    <br>
+    <br>
+    <br>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID:</th>
+            <th>Personal ID:</th>
+            <th>Surname:</th>
+            <th>Name:</th>
+            <th>Patronymic:</th>
+            <th>ID Dep:</th>
+            <th>Education:</th>
+            <th>Experience:</th>
+            <th>Phone:</th>
+            <th>Salary:</th>
+            <th>Status:</th>
+            <!--<th>Passport:</th> -->
+        </tr>
+        </thead>
+        <tbody>
+        {{#each officialInfo}}
+            <tr>
+                <td>{{this.idEmployee}}</td>
+                <td>{{this.personalNum}}</td>
+                <td>{{this.surname}}</td>
+                <td>{{this.name}}</td>
+                <td>{{this.patronymic}}</td>
+                <td>{{this.idDep}}</td>
+                <td>{{this.education}}</td>
+                <td>{{this.experience}}</td>
+                <td>{{this.phoneNum}}</td>
+                <td>{{this.salary}}</td>
+                <td>{{this.status}}</td>
+                <!--<td>{{this.passport}}</td> -->
+
+                <td>
+                    <a  class="s6" href="/officialInformation/{{this.idEmployee}}">More</a>
+                </td>
+
+                 <td>
+                    <a class="s6" href="/officialInformation/update/{{this.idEmployee}}">Update</a>
+                </td>
+
+                <td>
+                    <button onclick="DeleteMethod({{idEmployee}})" type="submit"> Delete</button>
+                </td>
+            </tr>
+        {{/each}}
+        </tbody>
+    </table>
+    <br>
+
+<h1 style="margin-left: 535px;"><strong>Find Official information by ID:</strong></h1>
+<form method="POST" action="/officialInformation">
+  <label style="margin-left: 635px;">
+    ID:
+    <input type="number" name="idEmployee" required>
+  </label>
+  <br>
+  <button type="submit" style="margin-left: 695px;">Find</button>
+</form>
+<br>
+
+    <a class="s1" href="/department/all">Departments</a>
+    <a class="s1" href="/personalInformation/all">Personal Information</a>
+</div>
+<br>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>PRISMA (Lab_19)</title>
+    <style>
+        .rows {
+            display: inline-block;
+            text-align: left;
+            padding: 5px;
+        }
+
+        .row {
+            display: inline-block;
+            justify-content: center;
+        }
+
+        #next {
+            display: none;
+        }
+
+        body {
+            background-color: rgba(180, 215, 255, 0.4);
+            font-family: "Leelawadee UI Semilight";
+            font-size: 18px;
+            line-height: 1.5;
+            color: rgba(5, 31, 119, 0.85);
+            text-align: center;
+        }
+
+        button {
+            background-color: rgba(180, 215, 255, 0.4);
+            border: 1px solid rgba(5, 31, 119, 0.85);
+            border-radius: 8px;
+            color: rgba(5, 31, 119, 0.85);
+            padding: 5px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 84px 2px;
+            cursor: pointer;
+            width: 40px;
+            height: 35px;
+        }
+
+        button:hover {
+            background-color: rgb(115, 147, 224);
+            color: rgb(255, 255, 255);
+        }
+
+        button:active {
+            background-color: rgb(115, 147, 224);
+            color: rgb(255, 255, 255);
+        }
+
+        .border {
+            border: 1px solid rgba(5, 31, 119, 0.85);
+            border-radius: 8px;
+            padding: 5px 10px;
+            width: 680px;
+            height: 840px;
+            overflow: auto;
+            background: aliceblue;
+            box-shadow: cornflowerblue 0px 0px 15px 0px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="row">
+    <div class="border">
+    <div class="rows" id="result"></div>
+    </div>
+    <br />
+    <div class="row">
+        <button id="last" onclick="lastPage()">1</button>
+    </div>
+    <div class="row">
+        <button id="next" onclick="nextPage()">2</button>
+    </div>
+</div>
+<script>
+    let currentPage = 1;
+    const lastButton = document.getElementById("last");
+    const nextButton = document.getElementById("next");
+    function lastPage() {
+        if (currentPage > 1) {
+            currentPage--;
+        }
+        pagination();
+    }
+    function nextPage() {
+        currentPage++;
+        pagination();
+    }
+
+    function pagination() {
+        fetch(`http://localhost:3000/api/pagination/${currentPage}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+            },
+        })
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                let result = document.getElementById("result");
+                result.innerHTML = "";
+                data.forEach((item) => {
+                    result.innerHTML +=
+                        "</br>" + item.PULPIT +
+                        " (" +
+                        item.PULPIT_NAME +
+                        ") " + "</br>" + "Count of teachers: " +
+                        item._count.TEACHER_TEACHER_PULPITToPULPIT +
+                        "</br>";
+                });
+
+                if (data.length != 10) {
+                    nextButton.style.display = "none";
+                    lastButton.innerHTML = currentPage - 1; // к кнопке last присваиваем предыдущую страницу
+                } else {
+                    nextButton.style.display = "block";
+                    lastButton.innerHTML = currentPage;
+                    nextButton.innerHTML = currentPage + 1;
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+                document.getElementById("result").innerHTML = "Error";
+            });
+    }
+</script>
+</body>
+</html>

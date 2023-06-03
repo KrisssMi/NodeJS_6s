@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Update department</title>
+
+<script defer="true">
+    document.addEventListener("DOMContentLoaded", async ()=>{
+      const applicantForm = document.getElementById('updateForm')
+       applicantForm.addEventListener('submit',await PutMethod)
+    })
+
+   async function PutMethod(e) {
+    e.preventDefault();
+     let department = document.getElementById("department").value;
+     let leader = document.getElementById("leader").value;
+     let phoneNum = document.getElementById("phoneNum").value;
+  
+    let data = JSON.stringify({department,leader,phoneNum });
+
+    const options = {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'   
+        },
+        body: data
+    };
+  
+    try
+        {
+          const idDep = window.location.pathname.split('/')[3];
+          const response = await fetch(`http://localhost:3000/department/update/${idDep}`, options);
+          document.location.href = 'http://localhost:3000/department/all';
+        }
+        catch(err)
+        {
+          console.log(err);
+        }
+
+    }
+  </script>
+</head>
+
+<body>
+<div style="font-family: CENTURY GOTHIC; font-size: 15px;">
+<br>
+<form id="updateForm">
+  <label for="department">Department:</label>
+  <input type="text" id="department" name="department" value="{{dep.department}}">
+  <br>
+  <label for="leader">Leader:</label>
+  <input type="text" id="leader" name="leader" value="{{dep.leader}}">
+  <br>
+  <label for="phoneNum">Phone:</label>
+  <input type="text" id="phoneNum" name="phoneNum" value="{{dep.phoneNum}}">
+  <br>
+  <button type="submit">Update</button>
+</form>
+</div>
+<form method="GET" action="/department/all">
+  <button type="submit">Back to list</button>
+</form>
+</body>
+</html>

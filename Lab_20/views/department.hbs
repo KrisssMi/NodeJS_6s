@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/handlebars"></script>
+    <meta charset="utf-8">
+    <title>Department</title>
+</head>
+<script defer="true">
+   async function DeleteMethod(idDep) {
+    const options = {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'   
+        },
+    };
+  
+    try
+        {
+          const res = await fetch('http://localhost:3000/department/delete/' +idDep , options);
+          document.location.href='http://localhost:3000/department/all'; 
+        }
+        catch (err)
+        {
+            console.log(err);
+        }
+    }
+  </script>
+
+<style>
+body {
+    font-size: 17px;
+}
+
+.s1 {
+   color: #b66502;
+   font-weight: bolder;
+   font-size: 20px;
+   letter-spacing: 1px;
+   border-bottom: 1px solid transparent;
+   border-top: 1px solid transparent;
+}
+.s1:hover {
+   border-bottom: 1px solid #af6f00;
+   border-top: 1px solid #af6000;
+}
+
+.s6 {
+   color: #E7805E;
+   border-bottom: 1px dashed;
+}
+.s6:hover {
+   border-bottom: 1px solid #9B8381;
+}
+
+a {
+   display: inline-block;
+   text-decoration: none;
+   text-transform: uppercase;
+   letter-spacing: 1px;
+   margin: 15px 25px;
+   padding: 15px 20px;
+   font-size: 17px;
+   font-weight: bold;
+   font-family: CENTURY GOTHIC; align-items: center; display: inline;  margin-right: auto;
+   transition: 0.4s ease-in-out;
+}
+
+
+    button {
+        background-color: #ff3d3d81;
+        border: none;
+        border-radius: 17px;
+        color: rgb(0, 0, 0);
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        font-family: CENTURY GOTHIC; align-items: center; display: inline;  margin-right: auto;
+    }
+
+    .table {
+        width: 100%;
+        margin-bottom: 20px;
+        border-collapse: collapse;
+        text-align: center; 
+        vertical-align: middle;
+    }
+
+    .table th {
+        font-weight: bold;
+        padding: 5px;
+        background: rgba(253, 151, 83, 0.33);
+        border: 1px solid rgba(189, 128, 53, 0.68);
+    }
+    .table td {
+        border: 1px solid #dddddd;
+        padding: 2px;
+    }
+    .table tr td:first-child, .table tr th:first-child {
+        border-left: none;
+    }
+    .table tr td:last-child, .table tr th:last-child {
+        border-right: none;
+    }
+    h1 {
+        margin-left: 670px;
+    }
+</style>
+<body>
+<h1 style="font-family: CENTURY GOTHIC; align-items: center; display: inline;  margin-right: auto;">Department</h1>
+<div style="font-family: CENTURY GOTHIC; font-size: 15px;">
+    <br>
+    <br>
+    <a class="s1" style="margin-left: 660px;" href="/department/add">Add department</a>
+    <br>
+    <br>
+    <br>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID:</th>
+            <th>Department:</th>
+            <th>Leader:</th>
+            <th>Phone:</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each department}}
+            <tr>
+                <td>{{this.idDep}}</td>
+                <td>{{this.department}}</td>
+                <td>{{this.leader}}</td>
+                <td>{{this.phoneNum}}</td>
+
+                <td>
+                    <a  class="s6" href="/department/{{this.idDep}}">More</a>
+                </td>
+
+                 <td>
+                    <a class="s6" href="/department/update/{{this.idDep}}">Update</a>
+                </td>
+
+                <td>
+                    <button onclick="DeleteMethod({{idDep}})" type="submit"> Delete</button>
+                </td>
+
+            </tr>
+        {{/each}}
+        </tbody>
+    </table>
+<br>
+
+<h1 style="margin-left: 595px;"><strong>Find department by ID:</strong></h1>
+<form method="POST" action="/department">
+  <label style="margin-left: 645px;">
+    ID:
+    <input type="number" name="idDep" required>
+  </label>
+  <br>
+  <button type="submit" style="margin-left: 700px;">Find</button>
+</form>
+<br>
+
+    <a class="s1" href="/personalInformation/all">Personal Information</a>
+    <a class="s1" href="/officialInformation/all">Official Information</a>
+</div>
+<br>
+</body>
+</html>

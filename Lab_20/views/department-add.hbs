@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add New Department</title>
+</head>
+<body>
+<h1 style="font-family: CENTURY GOTHIC; align-items: center; display: inline;  margin-right: auto;">Department</h1>
+<div style="font-family: CENTURY GOTHIC; font-size: 15px;">
+<form method="POST" action="/department/add">
+
+  <label for="department">Department:</label>
+  <input type="text" name="department" id="department"><br>
+
+  <label for="leader">Leader:</label>
+  <input type="text" name="leader" id="leader"><br>
+
+  <label for="phoneNum">Phone:</label>
+  <input type="text" name="phoneNum" id="phoneNum"><br>
+
+<button type="submit">Add</button>
+</form>
+</div>
+<br>
+</div>
+<form method="GET" action="/department/all">
+  <button type="submit">Back to list</button>
+</form>
+</body>
+</html>

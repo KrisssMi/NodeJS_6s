@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/handlebars"></script>
+    <meta charset="utf-8">
+    <title>Personal Information</title>
+</head>
+
+<script defer="true">
+   async function DeleteMethod(personalNum) {
+    const options = {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'   
+        },
+    };
+  
+    try
+        {
+          const res = await fetch('http://localhost:3000/personalInformation/delete/' + personalNum, options);
+          console.log("Test: "+ personalNum);
+          document.location.href='http://localhost:3000/personalInformation/all'; 
+        }
+        catch (err)
+        {
+            console.log(err);
+        }
+    }
+  </script>
+
+<style>
+    body {
+    font-size: 17px;
+}
+
+.s1 {
+   color: #32b602;
+   font-weight: bolder;
+   font-size: 20px;
+   letter-spacing: 1px;
+   border-bottom: 1px solid transparent;
+   border-top: 1px solid transparent;
+}
+.s1:hover {
+   border-bottom: 1px solid #11af00;
+   border-top: 1px solid #11af00;
+}
+
+.s6 {
+   color: rgba(62, 205, 0, 0.788);
+   border-bottom: 1px dashed;
+}
+.s6:hover {
+   border-bottom: 1px solid #9B8381;
+}
+
+a {
+   display: inline-block;
+   text-decoration: none;
+   text-transform: uppercase;
+   letter-spacing: 1px;
+   margin: 15px 25px;
+   padding: 15px 20px;
+   font-size: 17px;
+   font-weight: bold;
+   font-family: CENTURY GOTHIC; align-items: center; display: inline;  margin-right: auto;
+   transition: 0.4s ease-in-out;
+}
+
+    button {
+        background-color: #ff3d3d81;
+        border: none;
+        border-radius: 17px;
+        color: rgb(0, 0, 0);
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        font-family: CENTURY GOTHIC; align-items: center; display: inline;  margin-right: auto;
+    }
+
+    .table {
+        width: 100%;
+        margin-bottom: 20px;
+        border-collapse: collapse;
+        text-align: center; 
+        vertical-align: middle;
+    }
+
+    .table th {
+        font-weight: bold;
+        padding: 5px;
+        background: rgba(134, 255, 35, 0.33);
+        border: 1px solid rgba(62, 205, 0, 0.788);
+    }
+    .table td {
+        border: 1px solid #dddddd;
+        padding: 2px;
+    }
+    .table tr td:first-child, .table tr th:first-child {
+        border-left: none;
+    }
+    .table tr td:last-child, .table tr th:last-child {
+        border-right: none;
+    }
+    h1 {
+        margin-left: 590px;
+    }
+</style>
+<body>
+<h1 style="font-family: CENTURY GOTHIC; align-items: center; display: inline;  margin-right: auto;">Personal Information</h1>
+<div style="font-family: CENTURY GOTHIC; font-size: 15px;">
+    <br>
+    <br>
+    <a class="s1" style="margin-left: 560px;" href="/personalInformation/add">Add New Personal Information</a>
+    <br>
+    <br>
+    <br>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID:</th>
+            <th>City:</th>
+            <th>Passport:</th>
+            <th>Address:</th>
+            <th>Reg. address:</th>
+            <th>Marital Status:</th>
+            <th>Children:</th>
+            <th>Birthday:</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each personalInfo}}
+            <tr>
+                <td>{{this.personalNum}}</td>
+                <td>{{this.placeBirth}}</td>
+                <td>{{this.passport}}</td>
+                <td>{{this.address}}</td>
+                <td>{{this.regAddress}}</td>
+                <td>{{this.maritalStat}}</td>
+                <td>{{this.children}}</td>
+                <td>{{this.dateBirth}}</td>
+
+                <td>
+                    <a  class="s6" href="/personalInformation/{{this.personalNum}}">More</a>
+                </td>
+
+                 <td>
+                    <a class="s6" href="/personalInformation/update/{{this.personalNum}}">Update</a>
+                </td>
+
+                <td>
+                    <button onclick="DeleteMethod({{personalNum}})" type="submit"> Delete</button>
+                </td>
+            </tr>
+        {{/each}}
+        </tbody>
+    </table>
+    <br>
+
+<h1 style="margin-left: 535px;"><strong>Find Personal information by ID:</strong></h1>
+<form method="POST" action="/personalInformation">
+  <label style="margin-left: 635px;">
+    ID:
+    <input type="number" name="personalNum" required>
+  </label>
+  <br>
+  <button type="submit" style="margin-left: 695px;">Find</button>
+</form>
+<br>
+
+    <a class="s1" href="/department/all">Departments</a>
+    <a class="s1" href="/officialInformation/all">Official Information</a>
+</div>
+<br>
+</body>
+</html>

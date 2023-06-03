@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add New Personal Information</title>
+</head>
+<body>
+<h1 style="font-family: CENTURY GOTHIC; align-items: center; display: inline;  margin-right: auto;">Personal Information</h1>
+<div style="font-family: CENTURY GOTHIC; font-size: 15px;">
+<form method="POST" action="/personalInformation/add">
+
+  <label for="personalNum">ID:</label>
+  <input type="number" name="personalNum" id="personalNum"><br>
+
+  <label for="placeBirth">Place of birth:</label>
+  <input type="text" name="placeBirth" id="placeBirth"><br>
+
+  <label for="passport">Passport number:</label>
+  <input type="text" name="passport" id="passport"><br>
+
+  <label for="address">Address:</label>
+  <input type="text" name="address" id="address"><br>
+
+  <label for="regAddress">Registration address:</label>
+  <input type="text" name="regAddress" id="regAddress"><br>
+
+  <label for="maritalStat">Marital status:</label>
+  <input type="text" name="maritalStat" id="maritalStat"><br>
+
+  <label for="children">Number of children:</label>
+  <input type="number" name="children" id="children"><br>
+
+  <label for="dateBirth">Date of birth:</label>
+  <input type="date" name="dateBirth" id="dateBirth"><br>
+
+<button type="submit">Add</button>
+</form>
+</div>
+<br>
+</div>
+<form method="GET" action="/personalInformation/all">
+  <button type="submit">Back to list</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model Department {
+  idDep                Int                       @id(map: "idDep_pk") @default(autoincrement())
+  department           String?                   @db.VarChar(50)
+  leader               String?                   @db.VarChar(50)
+  phoneNum             String?                   @db.VarChar(20)
+  location             Unsupported("geography")?
+  Official_information Official_information[]
+  Vacancy              Vacancy[]
+}
+
+model Official_information {
+  idEmployee           Int                         @id(map: "idEmployee_pk") @default(autoincrement())
+  personalNum          Int?
+  surname              String?                     @db.VarChar(50)
+  name                 String?                     @db.VarChar(50)
+  patronymic           String?                     @db.VarChar(50)
+  idDep                Int?
+  education            String?                     @db.VarChar(50)
+  experience           String?                     @db.VarChar(50)
+  phoneNum             String?                     @db.VarChar(20)
+  salary               Int?
+  status               String?                     @db.VarChar(20)
+  hid                  Unsupported("hierarchyid")?
+  h_level              Int?                        @db.SmallInt
+  Department           Department?                 @relation(fields: [idDep], references: [idDep], onDelete: NoAction, onUpdate: NoAction, map: "idDep_ofInf_FK")
+  Personal_information Personal_information?       @relation(fields: [personalNum], references: [personalNum], onDelete: NoAction, onUpdate: NoAction, map: "personalNum_FK")
+}
+
+model Personal_information {
+  personalNum          Int                    @id(map: "personalNum_pk")
+  placeBirth           String?                @db.VarChar(25)
+  passport             String?                @db.VarChar(30)
+  address              String?                @db.VarChar(50)
+  regAddress           String?                @db.VarChar(50)
+  maritalStat          String?                @db.VarChar(20)
+  children             Int?
+  dateBirth            String?                @db.VarChar(50)
+  Official_information Official_information[]
+}
+
+model Vacancy {
+  idVacancy  Int         @id(map: "idVacancy_pk") @default(autoincrement())
+  idDep      Int?
+  salary     Int?
+  status     String      @db.VarChar(15)
+  Department Department? @relation(fields: [idDep], references: [idDep], onDelete: NoAction, onUpdate: NoAction, map: "idDep_vac_FK")
+}
